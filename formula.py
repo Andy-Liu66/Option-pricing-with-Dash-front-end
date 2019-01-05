@@ -23,6 +23,8 @@ class Black_Schole_model:
         self.T = T
         self.d1 = d1
         self.d2 = d2
+        self.nd1 = norm.cdf(self.d1)
+        self.nd2 = norm.cdf(self.d2)
     
     def call_price(self):
         call = self.s * norm.cdf(self.d1) - np.exp(-self.r * self.T) * self.k * norm.cdf(self.d2)
