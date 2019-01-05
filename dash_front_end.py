@@ -14,50 +14,71 @@ external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 
 app.layout = html.Div(children=[
+    # title
+    html.H3('Black Schole Model and Binomial Model', style={'textAlign': 'center', 'color': '#adb7c9'}),
+
     # left div
     html.Div([
         drc.Card([
-            html.H4('Black Schole Model and Binomial Model'),
+            html.H5('Parameters'),
             "Stock price", html.Br(),
-            dcc.Input(placeholder="enter stock price", type='number', value=100, id='s'),
+            dcc.Input(placeholder="enter stock price", type='number', value=100, id='s', style={'width': 120}),
             html.Br(),
             "Strike price", html.Br(),
-            dcc.Input(placeholder="enter strike price", type='number', value=70, id='k'),
+            dcc.Input(placeholder="enter strike price", type='number', value=70, id='k', style={'width': 120}),
             html.Br(),
             "Volatility (%)", html.Br(),
-            dcc.Input(placeholder="enter volatiltiy", type='number', value=20, id='vol'),
+            dcc.Input(placeholder="enter volatiltiy", type='number', value=20, id='vol', style={'width': 120}),
             html.Br(),
             "Risk free rate (%)", html.Br(),
-            dcc.Input(placeholder='enter rsik free rate', type='number', value=1, id='r'),
+            dcc.Input(placeholder='enter rsik free rate', type='number', value=1, id='r', style={'width': 120}),
             html.Br(),
-            "Time to maturity (in year)", html.Br(),
-            dcc.Input(placeholder='enter time to maturity', type='number', value=1, id='T'),
+            "Time to maturity (year)", html.Br(),
+            dcc.Input(placeholder='enter time to maturity', type='number', value=1, id='T', style={'width': 120}),
             html.Br(),
-            "Simulation period of Binomial Model", html.Br(),
-            dcc.Input(placeholder='enter simulation period', type='number', value=100, id='n_period')
+            "Period of Binomial Model", html.Br(),
+            dcc.Input(placeholder='enter simulation period', type='number', value=100, id='n_period', style={'width': 120})
         ])
-    ], className='six columns', style={'margin':10}),
+    ], className='two columns', style={'margin':0}),
+
+    # middle div
+    html.Div([
+        drc.Card([
+            html.H5('Price'),
+
+            'Black Schole Model', html.Br(),
+            html.Div(id='bs_output'),
+            # html.Br(),
+
+            'Binomial Model (European)', html.Br(),
+            html.Div(id='binomial_output_eu'),
+            # html.Br(),
+
+            'Binomial Model (American)', html.Br(),
+            html.Div(id='binomial_output_us'),
+
+            html.Br(),
+            html.H5('Other information'),
+
+            'Black Schole Model', html.Br(),
+            html.Div(id='bs_info'),
+            # html.Br(),
+
+            'Binomial Model', html.Br(),
+            html.Div(id='binomial_info')
+        ])
+    ], className='three columns', style={'margin':0}),
 
     # right div
     html.Div([
         drc.Card([
-            html.H4('Output'),
-
-            html.H5('Black Schole Model'),
-            html.Div(id='bs_output'),
-            html.Br(),
-
-            html.H5('Binomial Model (European)'),
-            html.Div(id='binomial_output_eu'),
-            html.Br(),
-
-            html.H5('Binomial Model (American)'),
-            html.Div(id='binomial_output_us'),
-
-            html.H5('Call Plot'),
-            dcc.Graph(id='call_plot'),
+            dcc.Tabs(id="tabs", value='binomial_call', children=[
+                dcc.Tab(label='Convergence of call', value='binomial_call'),
+                dcc.Tab(label='Convergence of put', value='binomial_put')
+            ]),
+            html.Div(id='tabs-content')
         ])
-    ], className='six columns', style={'margin':10})
+    ], className='seven columns', style={'margin':0})
 ])
 
 # deal with bs_output
@@ -74,13 +95,16 @@ def update_bs_output(s, k, vol, r, T):
     vol = vol/100
     r = r/100
     bs_model = Black_Schole_model(s, k, vol, r, T)
-    result = pd.DataFrame([[bs_model.call_price(),
-                            bs_model.put_price()]],
-                            columns=["Call price", "Put price"])
+    value = [bs_model.call_price(),
+             bs_model.put_price()]
+    value = list(map(lambda x: np.round(x, 4), value))
+    result = pd.DataFrame([value],
+                          columns=["Call price", "Put price"])
 
     table = dash_table.DataTable(id='table',
                                  columns=[{"name": i, "id": i} for i in result.columns],
-                                 data=result.to_dict("rows"))
+                                 data=result.to_dict("rows"),
+                                 style_cell={'textAlign': 'center'})
 
     return table
 
@@ -99,13 +123,16 @@ def update_binomial_output_eu(s, k, vol, r, T, n_period):
     vol = vol/100
     r = r/100
     binomial_model_eu = Binomial_model(s, k, vol, r, T, n_period, american=False)
-    result = pd.DataFrame([[binomial_model_eu.call_price(),
-                            binomial_model_eu.put_price()]],
-                            columns=["Call price", "Put price"])
+    value = [binomial_model_eu.call_price(),
+             binomial_model_eu.put_price()]
+    value = list(map(lambda x: np.round(x, 4), value))
+    result = pd.DataFrame([value],
+                          columns=["Call price", "Put price"])
 
     table = dash_table.DataTable(id='table',
                                  columns=[{"name": i, "id": i} for i in result.columns],
-                                 data=result.to_dict("rows"))
+                                 data=result.to_dict("rows"),
+                                 style_cell={'textAlign': 'center'})
 
     return table
 
@@ -124,19 +151,22 @@ def update_binomial_output_eu(s, k, vol, r, T, n_period):
     vol = vol/100
     r = r/100
     binomial_output_us = Binomial_model(s, k, vol, r, T, n_period, american=True)
-    result = pd.DataFrame([[binomial_output_us.call_price(),
-                            binomial_output_us.put_price()]],
-                            columns=["Call price", "Put price"])
+    value = [binomial_output_us.call_price(),
+             binomial_output_us.put_price()]
+    value = list(map(lambda x: np.round(x, 4), value))
+    result = pd.DataFrame([value],
+                          columns=["Call price", "Put price"])
 
     table = dash_table.DataTable(id='table',
                                  columns=[{"name": i, "id": i} for i in result.columns],
-                                 data=result.to_dict("rows"))
+                                 data=result.to_dict("rows"),
+                                 style_cell={'textAlign': 'center'})
 
     return table
 
-# deal with plot
+# deal with bs_info
 @app.callback(
-    Output('call_plot', 'figure'),
+    Output('bs_info', 'children'),
     [Input('s', 'value'),
      Input('k', 'value'),
      Input('vol', 'value'),
@@ -144,41 +174,131 @@ def update_binomial_output_eu(s, k, vol, r, T, n_period):
      Input('T', 'value')]
 )
 
-def up_date_graph(s, k, vol, r, T):
+def update_bs_info(s, k, vol, r, T):
     vol = vol/100
     r = r/100
     bs_model = Black_Schole_model(s, k, vol, r, T)
+    value = [bs_model.nd1,
+             bs_model.nd2]
+    value = list(map(lambda x: np.round(x, 4), value))
+    result = pd.DataFrame([value],
+                          columns=["N(d1)", "N(d2)"])
 
-    price = []
-    for i in np.arange(1, 101, 1):
-        binomial_model = Binomial_model(s, k, vol, r, T, i)
-        price.append(binomial_model.call_price())
-    
-    trace_bs = go.Scatter(
-        x = np.arange(1, 101, 1),
-        y = [bs_model.call_price()] * len(price),
-        name = "Black Schole Model",
-        line={'dash': 'dot'}
-    )
+    table = dash_table.DataTable(id='table',
+                                 columns=[{"name": i, "id": i} for i in result.columns],
+                                 data=result.to_dict("rows"),
+                                 style_cell={'textAlign': 'center'})
 
-    trace_binomial = go.Scatter(
-        x = np.arange(1, 101, 1),
-        y = price,
-        name = "Binomial Model"
-    )
+    return table
 
-    data = [trace_bs, trace_binomial]
-    
-    return {
-        'data': data,
-        'layout': go.Layout(
-            xaxis={'title': 'N period'},
-            yaxis={'title': 'Call price'},
-            title='Call price (European): Black Schole Model vs Binomial Model'
+# deal with binomial_info
+@app.callback(
+    Output('binomial_info', 'children'),
+    [Input('s', 'value'),
+     Input('k', 'value'),
+     Input('vol', 'value'),
+     Input('r', 'value'),
+     Input('T', 'value'),
+     Input('n_period', 'value')]
+)
+
+def update_binomial_info(s, k, vol, r, T, n_period):
+    vol = vol/100
+    r = r/100
+    binomial_model = Binomial_model(s, k, vol, r, T, n_period)
+    value = [binomial_model.up,
+             binomial_model.down,
+             binomial_model.probability]
+    value = list(map(lambda x: np.round(x, 4), value))
+    result = pd.DataFrame([value],
+                          columns=["up", "down", "probability"])
+
+    table = dash_table.DataTable(id='table',
+                                 columns=[{"name": i, "id": i} for i in result.columns],
+                                 data=result.to_dict("rows"),
+                                 style_cell={'textAlign': 'center'})
+
+    return table
+
+# deal with plot
+@app.callback(Output('tabs-content', 'children'),
+              [Input('tabs', 'value'),
+               Input('s', 'value'),
+               Input('k', 'value'),
+               Input('vol', 'value'),
+               Input('r', 'value'),
+               Input('T', 'value')])
+
+def render_content(tab, s, k, vol, r, T):
+    if tab == 'binomial_call':
+        return html.Div([
+            dcc.Graph(id='graph', figure=generate_figure(tab, s, k, vol, r, T))
+        ])
+    elif tab == 'binomial_put':
+        return html.Div([
+            dcc.Graph(id='graph', figure=generate_figure(tab, s, k, vol, r, T))
+        ])
+
+def generate_figure(tab, s, k, vol, r, T):
+    vol = vol/100
+    r = r/100
+    bs_model = Black_Schole_model(s, k, vol, r, T)
+    if tab == 'binomial_call':
+        price = []
+        for i in np.arange(1, 101, 1):
+            binomial_model = Binomial_model(s, k, vol, r, T, i)
+            price.append(binomial_model.call_price())
+        
+        trace_bs = go.Scatter(
+            x = np.arange(1, 101, 1),
+            y = [bs_model.call_price()] * len(price),
+            name = "Black Schole Model",
+            line={'dash': 'dot'}
         )
-    }
-    
 
+        trace_binomial = go.Scatter(
+            x = np.arange(1, 101, 1),
+            y = price,
+            name = "Binomial Model"
+        )
+
+        data = [trace_bs, trace_binomial]
+        return {
+            'data': data,
+            'layout': go.Layout(
+                xaxis={'title': 'N period'},
+                yaxis={'title': 'Call price'},
+                title='Call price (European): Black Schole Model vs Binomial Model'
+            )
+        }
+    elif tab == 'binomial_put':
+        price = []
+        for i in np.arange(1, 101, 1):
+            binomial_model = Binomial_model(s, k, vol, r, T, i)
+            price.append(binomial_model.put_price())
+        
+        trace_bs = go.Scatter(
+            x = np.arange(1, 101, 1),
+            y = [bs_model.put_price()] * len(price),
+            name = "Black Schole Model",
+            line={'dash': 'dot'}
+        )
+
+        trace_binomial = go.Scatter(
+            x = np.arange(1, 101, 1),
+            y = price,
+            name = "Binomial Model"
+        )
+
+        data = [trace_bs, trace_binomial]
+        return {
+            'data': data,
+            'layout': go.Layout(
+                xaxis={'title': 'N period'},
+                yaxis={'title': 'Put price'},
+                title='Put price (European): Black Schole Model vs Binomial Model'
+            )
+        }
 
 # app.css.append_css({'external_url': 'https://codepen.io/plotly/pen/EQZeaW.css'})
 if __name__ == '__main__':
