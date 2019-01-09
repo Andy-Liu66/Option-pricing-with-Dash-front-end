@@ -105,3 +105,45 @@ class Binomial_model:
         self.put_tree = pd.DataFrame(put_tree)
         self.put = self.put_tree.iloc[0, 0]
         return self.put
+
+
+class Monte_Carlo_simulation:
+    def __init__(self, s, k, vol, r, T, n_simulaton):
+        self.s = s
+        self.k = k
+        self.vol =vol
+        self.r = r
+        self.T =T
+        self.n_simulaton = n_simulaton
+        self.discount_factor = np.exp(-self.r * self.T)
+    
+    def generate_s_T(self):
+        s_T = self.s * np.exp((self.r - 0.5 * self.vol**2) * self.T + 
+                               self.vol * np.sqrt(self.T) * np.random.normal())
+        return s_T
+    
+    def call_price(self):
+        def call_payoff(s_T, k):
+            return max(s_T-k, 0)
+        
+        pay_off = []
+        for i in range(self.n_simulaton):
+            s_T = self.generate_s_T()
+            pay_off.append(call_payoff(s_T, self.k))
+        
+        call = self.discount_factor * (sum(pay_off) / float(self.n_simulaton))
+        self.call = call
+        return self.call
+
+    def put_price(self):
+        def put_payoff(s_T, k):
+            return max(k-s_T, 0)
+        
+        pay_off = []
+        for i in range(self.n_simulaton):
+            s_T = self.generate_s_T()
+            pay_off.append(put_payoff(s_T, self.k))
+        
+        put = self.discount_factor * (sum(pay_off) / float(self.n_simulaton))
+        self.put = put
+        return self.put
