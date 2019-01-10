@@ -52,9 +52,12 @@ If deployment is successfully done, you can access your app from url which could
 ## Reference
 * **Option pricing**
   * Binomial
-    https://www.hoadley.net/options/binomialtree.aspx?tree=B 
+
+    https://www.hoadley.net/options/binomialtree.aspx?tree=B
+     
     https://www.youtube.com/watch?v=lSnWkQYbWyA
   * Monte Carlo simulation
+
     http://www.codeandfinance.com/pricing-options-monte-carlo.html
 * **Dash**
   * [Trigger an event by changing tab](https://community.plot.ly/t/trigger-an-event-by-changing-tab/5987)
