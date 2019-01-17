@@ -1,7 +1,7 @@
 # Option pricing with Dash front end
 
 ## Introduction
-Create web app with [Dash](https://dash.plot.ly/), implementing Black Schole model, Binomial model, Monte Carlo simulation for option pricing (ignoring dividend payment), and deploying this web app to [AWS Elastic Beanstalk](https://aws.amazon.com/tw/elasticbeanstalk/).
+Create web app with [Dash](https://dash.plot.ly/), implementing Black Scholes model, Binomial model, Monte Carlo simulation for option pricing (ignoring dividend payment), and deploying this web app to [AWS Elastic Beanstalk](https://aws.amazon.com/tw/elasticbeanstalk/).
 
 ## File description
 There are four files:
@@ -11,7 +11,7 @@ There are four files:
    Used in application, using "Card" component from this [repository](https://github.com/plotly/dash-svm/blob/master/utils/dash_reusable_components.py).
 4. **formula**
    Used in application, contains three classes for option pricing:
-   * Black_Schole_model
+   * Black_Scholes_model
    * Binomial_model
    * Monte_Carlo_simulation
    
