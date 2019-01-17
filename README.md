@@ -70,3 +70,5 @@ If deployment is successfully done, you can access your app from url which could
 * **AWS Elastic Beanstalk Deployment**
   * [Plotly Dash and the Elastic Beanstalk Command Line](https://medium.com/@austinlasseter/plotly-dash-and-the-elastic-beanstalk-command-line-89fb6b67bb79)
   * [Deploying a Dash App with Elastic Beanstalk Console (with Docker)](https://medium.com/@austinlasseter/deploying-a-dash-app-with-elastic-beanstalk-console-27a834ebe91d)
+* **CSS**
+  * [Flexbox Tutorial (CSS): Real Layout Examples](https://www.youtube.com/watch?v=k32voqQhODc)
