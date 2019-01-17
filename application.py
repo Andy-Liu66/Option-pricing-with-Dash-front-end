@@ -15,34 +15,34 @@ application = app.server
 
 app.layout = html.Div(children=[
     # title
-    html.H3('Option pricing - Black Scholes Model, Binomial Model and Monte Carlo Simulation', style={'textAlign': 'center', 'color': '#adb7c9'}),
+    html.H3('Option pricing - Black Scholes Model, Binomial Model, and Monte Carlo Simulation', style={'textAlign': 'center', 'color': '#adb7c9', 'font-size': '2.8vw'}),
     html.Div([
             # left div
             html.Div([
                 drc.Card([
                     html.H5('Parameters'),
                     "Stock price", html.Br(),
-                    dcc.Input(placeholder="enter stock price", type='number', value=100, id='s', style={'width': 120}),
+                    dcc.Input(placeholder="enter stock price", type='number', value=100, id='s', style={'width': '100%'}),
                     html.Br(),
                     "Strike price", html.Br(),
-                    dcc.Input(placeholder="enter strike price", type='number', value=70, id='k', style={'width': 120}),
+                    dcc.Input(placeholder="enter strike price", type='number', value=70, id='k', style={'width': '100%'}),
                     html.Br(),
                     "Volatility (%)", html.Br(),
-                    dcc.Input(placeholder="enter volatiltiy", type='number', value=20, id='vol', style={'width': 120}),
+                    dcc.Input(placeholder="enter volatiltiy", type='number', value=20, id='vol', style={'width': '100%'}),
                     html.Br(),
                     "Risk free rate (%)", html.Br(),
-                    dcc.Input(placeholder='enter rsik free rate', type='number', value=1, id='r', style={'width': 120}),
+                    dcc.Input(placeholder='enter rsik free rate', type='number', value=1, id='r', style={'width': '100%'}),
                     html.Br(),
                     "Time to maturity (year)", html.Br(),
-                    dcc.Input(placeholder='enter time to maturity', type='number', value=1, id='T', style={'width': 120}),
+                    dcc.Input(placeholder='enter time to maturity', type='number', value=1, id='T', style={'width': '100%'}),
                     html.Br(),
                     "Number of period for Binomial Model", html.Br(),
-                    dcc.Input(placeholder='enter simulation period', type='number', value=100, id='n_period_binomial', style={'width': 120}),
+                    dcc.Input(placeholder='enter simulation period', type='number', value=100, id='n_period_binomial', style={'width': '100%'}),
                     html.Br(),
                     "Number of path for Monte Carlo simulation", html.Br(),
-                    dcc.Input(placeholder='enter simulation period', type='number', value=10000, id='n_period_monte_carlo', style={'width': 120})
+                    dcc.Input(placeholder='enter simulation period', type='number', value=10000, id='n_period_monte_carlo', style={'width': '100%'})
                 ])
-            ], className='three columns', style={'margin':0, 'width': 180, 'vertical-align': 'middle', 'display': 'inline-block'}, id="left"),
+            ], style={'flex': 1.5, 'vertical-align': 'middle'}),
 
             # middle div
             html.Div([
@@ -73,7 +73,7 @@ app.layout = html.Div(children=[
                     'Binomial Model', html.Br(),
                     html.Div(id='binomial_info')
                 ])
-            ], className='three columns', style={'margin':0, 'width': 250, 'vertical-align': 'middle', 'display': 'inline-block'}, id="center"),
+            ], style={'flex': 2, 'vertical-align': 'middle'}),
 
             # right div
             html.Div([
@@ -84,8 +84,8 @@ app.layout = html.Div(children=[
                     ]),
                     html.Div(id='tabs-content')
                 ])
-            ], className='three columns', style={'margin':0, 'width': 800, 'vertical-align': 'middle', 'display': 'inline-block'}, id="right")
-    ], id="flex-container", style={'display': 'flex', 'flex-wrap': 'wrap', 'justify-content': 'center', 'margin': 'auto'})
+            ], style={'flex': 5, 'vertical-align': 'middle'})
+    ], style={'display': 'flex', 'flex-wrap': 'wrap', 'justify-content': 'center', 'margin': 'auto'})
 ])
 
 # deal with bs_output
