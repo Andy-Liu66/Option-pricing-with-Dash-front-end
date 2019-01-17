@@ -3,7 +3,7 @@ import numpy as np
 from scipy.stats import norm
 
 
-class Black_Schole_model:
+class Black_Scholes_model:
     def __init__(self, s, k, vol, r, T):
         if T > 0:
             d1 = (np.log(s/k) + (r+0.5*(vol**2))*T) / (vol*np.sqrt(T))
@@ -25,6 +25,8 @@ class Black_Schole_model:
         self.d2 = d2
         self.nd1 = norm.cdf(self.d1)
         self.nd2 = norm.cdf(self.d2)
+        # nd(-2)
+        self.ndn2 = norm.cdf(-self.d2)
     
     def call_price(self):
         call = self.s * norm.cdf(self.d1) - np.exp(-self.r * self.T) * self.k * norm.cdf(self.d2)
@@ -39,7 +41,7 @@ class Black_Schole_model:
 
 class Binomial_model:
     '''
-    Using Cox-Ross-Rubinstein solution
+    Using Cox-Ross-Rubinstein solution.
     '''
     def __init__(self, s, k, vol, r, T, n_period, american=False):
         self.delta_t = T / n_period
@@ -108,6 +110,9 @@ class Binomial_model:
 
 
 class Monte_Carlo_simulation:
+    '''
+    Price of an asset follows a geometric Brownian motion.
+    '''
     def __init__(self, s, k, vol, r, T, n_simulaton):
         self.s = s
         self.k = k

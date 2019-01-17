@@ -7,7 +7,7 @@ import dash_table
 import plotly.graph_objs as go
 import numpy as np
 import pandas as pd
-from formula import Black_Schole_model, Binomial_model, Monte_Carlo_simulation
+from formula import Black_Scholes_model, Binomial_model, Monte_Carlo_simulation
 
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
@@ -15,7 +15,7 @@ application = app.server
 
 app.layout = html.Div(children=[
     # title
-    html.H3('Option pricing - Black Schole Model, Binomial Model and Monte Carlo Simulation', style={'textAlign': 'center', 'color': '#adb7c9'}),
+    html.H3('Option pricing - Black Scholes Model, Binomial Model and Monte Carlo Simulation', style={'textAlign': 'center', 'color': '#adb7c9'}),
     html.Div([
             # left div
             html.Div([
@@ -36,10 +36,10 @@ app.layout = html.Div(children=[
                     "Time to maturity (year)", html.Br(),
                     dcc.Input(placeholder='enter time to maturity', type='number', value=1, id='T', style={'width': 120}),
                     html.Br(),
-                    "Period of Binomial Model", html.Br(),
+                    "Number of period for Binomial Model", html.Br(),
                     dcc.Input(placeholder='enter simulation period', type='number', value=100, id='n_period_binomial', style={'width': 120}),
                     html.Br(),
-                    "Period of Monte Carlo simulation", html.Br(),
+                    "Number of path for Monte Carlo simulation", html.Br(),
                     dcc.Input(placeholder='enter simulation period', type='number', value=10000, id='n_period_monte_carlo', style={'width': 120})
                 ])
             ], className='three columns', style={'margin':0, 'width': 180, 'vertical-align': 'middle', 'display': 'inline-block'}, id="left"),
@@ -49,7 +49,7 @@ app.layout = html.Div(children=[
                 drc.Card([
                     html.H5('Price'),
 
-                    'Black Schole Model', html.Br(),
+                    'Black Scholes Model', html.Br(),
                     html.Div(id='bs_output'),
                     # html.Br(),
 
@@ -66,7 +66,7 @@ app.layout = html.Div(children=[
                     html.Br(),
                     html.H5('Other information'),
 
-                    'Black Schole Model', html.Br(),
+                    'Black Scholes Model', html.Br(),
                     html.Div(id='bs_info'),
                     # html.Br(),
 
@@ -101,7 +101,7 @@ app.layout = html.Div(children=[
 def update_bs_output(s, k, vol, r, T):
     vol = vol/100
     r = r/100
-    bs_model = Black_Schole_model(s, k, vol, r, T)
+    bs_model = Black_Scholes_model(s, k, vol, r, T)
     value = [bs_model.call_price(),
              bs_model.put_price()]
     value = list(map(lambda x: np.round(x, 4), value))
@@ -212,12 +212,12 @@ def update_monte_carlo_output(s, k, vol, r, T, n_simulation):
 def update_bs_info(s, k, vol, r, T):
     vol = vol/100
     r = r/100
-    bs_model = Black_Schole_model(s, k, vol, r, T)
-    value = [bs_model.nd1,
-             bs_model.nd2]
+    bs_model = Black_Scholes_model(s, k, vol, r, T)
+    value = [bs_model.nd2,
+             bs_model.ndn2]
     value = list(map(lambda x: np.round(x, 4), value))
     result = pd.DataFrame([value],
-                          columns=["N(d1)", "N(d2)"])
+                          columns=["N(d2)", "N(-d2)"])
 
     table = dash_table.DataTable(id='table',
                                  columns=[{"name": i, "id": i} for i in result.columns],
@@ -277,7 +277,7 @@ def render_content(tab, s, k, vol, r, T):
 def generate_figure(tab, s, k, vol, r, T):
     vol = vol/100
     r = r/100
-    bs_model = Black_Schole_model(s, k, vol, r, T)
+    bs_model = Black_Scholes_model(s, k, vol, r, T)
     if tab == 'binomial_call':
         price = []
         for i in np.arange(1, 101, 1):
@@ -287,7 +287,7 @@ def generate_figure(tab, s, k, vol, r, T):
         trace_bs = go.Scatter(
             x = np.arange(1, 101, 1),
             y = [bs_model.call_price()] * len(price),
-            name = "Black Schole Model",
+            name = "Black Scholes Model",
             line={'dash': 'dot'}
         )
 
@@ -303,7 +303,7 @@ def generate_figure(tab, s, k, vol, r, T):
             'layout': go.Layout(
                 xaxis={'title': 'N period'},
                 yaxis={'title': 'Call price'},
-                title='Call price (European): Black Schole Model vs Binomial Model'
+                title='Call price (European): Black Scholes Model vs Binomial Model'
             )
         }
     elif tab == 'binomial_put':
@@ -315,7 +315,7 @@ def generate_figure(tab, s, k, vol, r, T):
         trace_bs = go.Scatter(
             x = np.arange(1, 101, 1),
             y = [bs_model.put_price()] * len(price),
-            name = "Black Schole Model",
+            name = "Black Scholes Model",
             line={'dash': 'dot'}
         )
 
@@ -331,7 +331,7 @@ def generate_figure(tab, s, k, vol, r, T):
             'layout': go.Layout(
                 xaxis={'title': 'N period'},
                 yaxis={'title': 'Put price'},
-                title='Put price (European): Black Schole Model vs Binomial Model'
+                title='Put price (European): Black Scholes Model vs Binomial Model'
             )
         }
 
