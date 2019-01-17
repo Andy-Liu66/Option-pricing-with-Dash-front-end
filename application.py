@@ -214,7 +214,7 @@ def update_bs_info(s, k, vol, r, T):
     r = r/100
     bs_model = Black_Scholes_model(s, k, vol, r, T)
     value = [bs_model.nd2,
-             bs_model.ndn2]
+             bs_model.nnd2]
     value = list(map(lambda x: np.round(x, 4), value))
     result = pd.DataFrame([value],
                           columns=["N(d2)", "N(-d2)"])

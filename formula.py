@@ -25,8 +25,8 @@ class Black_Scholes_model:
         self.d2 = d2
         self.nd1 = norm.cdf(self.d1)
         self.nd2 = norm.cdf(self.d2)
-        # nd(-2)
-        self.ndn2 = norm.cdf(-self.d2)
+        # n(-d2)
+        self.nnd2 = norm.cdf(-self.d2)
     
     def call_price(self):
         call = self.s * norm.cdf(self.d1) - np.exp(-self.r * self.T) * self.k * norm.cdf(self.d2)
