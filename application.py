@@ -40,7 +40,10 @@ app.layout = html.Div(children=[
                     dcc.Input(placeholder='enter simulation period', type='number', value=100, id='n_period_binomial', style={'width': '100%'}),
                     html.Br(),
                     "Number of path for Monte Carlo simulation", html.Br(),
-                    dcc.Input(placeholder='enter simulation period', type='number', value=10000, id='n_period_monte_carlo', style={'width': '100%'})
+                    dcc.Input(placeholder='enter simulation period', type='number', value=10000, id='n_period_monte_carlo', style={'width': '100%'}),
+                    html.Br(),
+                    html.Br(),
+                    html.P(['(Ignore dividend payment)'])
                 ])
             ], style={'flex': 1.5, 'vertical-align': 'middle'}),
 
