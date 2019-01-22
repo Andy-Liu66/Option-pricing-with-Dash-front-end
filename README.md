@@ -6,17 +6,21 @@ Create web app with [Dash](https://dash.plot.ly/), implementing Black Scholes mo
 ## File description
 There are four files:
 1. **application**
+
    Main application.
 2. **dash_reusable_components**
+
    Used in application, using "Card" component from this [repository](https://github.com/plotly/dash-svm/blob/master/utils/dash_reusable_components.py).
-4. **formula**
+3. **formula**
+
    Used in application, contains three classes for option pricing:
    * Black_Scholes_model
    * Binomial_model
    * Monte_Carlo_simulation
    
    Each class contains two main functions: "call_price()" & "put_price()", after initiating these classes and calling above functions will return option price. 
-6. **requirements**
+4. **requirements**
+
    Contain name and verison of required packages.
    
 ## Deployment process
@@ -61,14 +65,16 @@ If deployment is successfully done, you can access your app from url which could
     http://www.codeandfinance.com/pricing-options-monte-carlo.html
 * **Dash**
   * [Trigger an event by changing tab](https://community.plot.ly/t/trigger-an-event-by-changing-tab/5987)
-  * [CSS Flexbox](https://www.w3schools.com/css/css3_flexbox.asp)
   * Application example
     1. [Support Vector Machine (SVM) Explorer](https://github.com/plotly/dash-svm)
+
       https://github.com/plotly/dash-svm/blob/master/app.py
     2. [US opioid epidemic dataset and Dash app](https://opioid-epidemic.herokuapp.com/)
+    
       https://github.com/plotly/dash-opioid-epidemic-demo
 * **AWS Elastic Beanstalk Deployment**
   * [Plotly Dash and the Elastic Beanstalk Command Line](https://medium.com/@austinlasseter/plotly-dash-and-the-elastic-beanstalk-command-line-89fb6b67bb79)
   * [Deploying a Dash App with Elastic Beanstalk Console (with Docker)](https://medium.com/@austinlasseter/deploying-a-dash-app-with-elastic-beanstalk-console-27a834ebe91d)
 * **CSS**
+  * [CSS Flexbox](https://www.w3schools.com/css/css3_flexbox.asp)
   * [Flexbox Tutorial (CSS): Real Layout Examples](https://www.youtube.com/watch?v=k32voqQhODc)
