@@ -68,10 +68,10 @@ If deployment is successfully done, you can access your app from url which could
   * Application example
     1. [Support Vector Machine (SVM) Explorer](https://github.com/plotly/dash-svm)
 
-      https://github.com/plotly/dash-svm/blob/master/app.py
+       https://github.com/plotly/dash-svm/blob/master/app.py
     2. [US opioid epidemic dataset and Dash app](https://opioid-epidemic.herokuapp.com/)
-    
-      https://github.com/plotly/dash-opioid-epidemic-demo
+
+       https://github.com/plotly/dash-opioid-epidemic-demo
 * **AWS Elastic Beanstalk Deployment**
   * [Plotly Dash and the Elastic Beanstalk Command Line](https://medium.com/@austinlasseter/plotly-dash-and-the-elastic-beanstalk-command-line-89fb6b67bb79)
   * [Deploying a Dash App with Elastic Beanstalk Console (with Docker)](https://medium.com/@austinlasseter/deploying-a-dash-app-with-elastic-beanstalk-console-27a834ebe91d)
