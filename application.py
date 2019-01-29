@@ -13,76 +13,78 @@ external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets,
                 meta_tags=[
                     {'name': "viewport",
-                    'content': "width=device-width",
-                    'initial-scale': 1.0}
+                    'content': "width=500",
+                    'initial-scale': 1}
                 ])
 app.title = 'Option pricing'
 application = app.server
 
 app.layout = html.Div(children=[
     # title
-    html.H3('Option pricing - Black Scholes Model, Binomial Model, and Monte Carlo Simulation', style={'textAlign': 'center', 'color': '#adb7c9'}),
+    html.H3('Option pricing - Black Scholes Model, Binomial Model, and Monte Carlo Simulation', style={'textAlign': 'center', 'color': '#adb7c9', 'font-size': '24'}),
     html.Div([
-            # left div
             html.Div([
-                drc.Card([
-                    html.H5('Parameters'),
-                    "Stock price", html.Br(),
-                    dcc.Input(placeholder="enter stock price", type='number', value=100, id='s', style={'width': '100%'}),
-                    html.Br(),
-                    "Strike price", html.Br(),
-                    dcc.Input(placeholder="enter strike price", type='number', value=70, id='k', style={'width': '100%'}),
-                    html.Br(),
-                    "Volatility (%)", html.Br(),
-                    dcc.Input(placeholder="enter volatiltiy", type='number', value=20, id='vol', style={'width': '100%'}),
-                    html.Br(),
-                    "Risk free rate (%)", html.Br(),
-                    dcc.Input(placeholder='enter rsik free rate', type='number', value=1, id='r', style={'width': '100%'}),
-                    html.Br(),
-                    "Time to maturity (year)", html.Br(),
-                    dcc.Input(placeholder='enter time to maturity', type='number', value=1, id='T', style={'width': '100%'}),
-                    html.Br(),
-                    "Number of period for Binomial Model", html.Br(),
-                    dcc.Input(placeholder='enter simulation period', type='number', value=100, id='n_period_binomial', style={'width': '100%'}),
-                    html.Br(),
-                    "Number of path for Monte Carlo simulation", html.Br(),
-                    dcc.Input(placeholder='enter simulation period', type='number', value=10000, id='n_period_monte_carlo', style={'width': '100%'}),
-                    html.Br(),
-                    html.Br(),
-                    html.P(['(Ignore dividend payment)'])
-                ])
-            ], style={'flex': 1.5, 'vertical-align': 'middle'}),
+                # left div
+                html.Div([
+                    drc.Card([
+                        html.H5('Parameters'),
+                        "Stock price", html.Br(),
+                        dcc.Input(placeholder="enter stock price", type='number', value=100, id='s', style={'width': '100%'}),
+                        html.Br(),
+                        "Strike price", html.Br(),
+                        dcc.Input(placeholder="enter strike price", type='number', value=70, id='k', style={'width': '100%'}),
+                        html.Br(),
+                        "Volatility (%)", html.Br(),
+                        dcc.Input(placeholder="enter volatiltiy", type='number', value=20, id='vol', style={'width': '100%'}),
+                        html.Br(),
+                        "Risk free rate (%)", html.Br(),
+                        dcc.Input(placeholder='enter rsik free rate', type='number', value=1, id='r', style={'width': '100%'}),
+                        html.Br(),
+                        "Time to maturity (year)", html.Br(),
+                        dcc.Input(placeholder='enter time to maturity', type='number', value=1, id='T', style={'width': '100%'}),
+                        html.Br(),
+                        "Number of period for Binomial Model", html.Br(),
+                        dcc.Input(placeholder='enter simulation period', type='number', value=100, id='n_period_binomial', style={'width': '100%'}),
+                        html.Br(),
+                        "Number of path for Monte Carlo simulation", html.Br(),
+                        dcc.Input(placeholder='enter simulation period', type='number', value=10000, id='n_period_monte_carlo', style={'width': '100%'}),
+                        html.Br(),
+                        html.Br(),
+                        html.P(['(Ignore dividend payment)'])
+                    ])
+                ], style={'flex': 1.5, 'vertical-align': 'middle'}),
 
-            # middle div
-            html.Div([
-                drc.Card([
-                    html.H5('Price'),
+                # middle div
+                html.Div([
+                    drc.Card([
+                        html.H5('Price'),
 
-                    'Black Scholes Model', html.Br(),
-                    html.Div(id='bs_output'),
-                    # html.Br(),
+                        'Black Scholes Model', html.Br(),
+                        html.Div(id='bs_output'),
+                        # html.Br(),
 
-                    'Binomial Model (European)', html.Br(),
-                    html.Div(id='binomial_output_eu'),
-                    # html.Br(),
+                        'Binomial Model (European)', html.Br(),
+                        html.Div(id='binomial_output_eu'),
+                        # html.Br(),
 
-                    'Binomial Model (American)', html.Br(),
-                    html.Div(id='binomial_output_us'),
+                        'Binomial Model (American)', html.Br(),
+                        html.Div(id='binomial_output_us'),
 
-                    'Monte Carlo Simulation', html.Br(),
-                    html.Div(id='monte_carlo_output'),
+                        'Monte Carlo Simulation', html.Br(),
+                        html.Div(id='monte_carlo_output'),
 
-                    html.Br(),
-                    html.H5('Other information'),
+                        html.Br(),
+                        html.H5('Other information'),
 
-                    'Black Scholes Model', html.Br(),
-                    html.Div(id='bs_info'),
-                    # html.Br(),
+                        'Black Scholes Model', html.Br(),
+                        html.Div(id='bs_info'),
+                        # html.Br(),
 
-                    'Binomial Model', html.Br(),
-                    html.Div(id='binomial_info')
-                ])
-            ], style={'flex': 2, 'vertical-align': 'middle'}),
+                        'Binomial Model', html.Br(),
+                        html.Div(id='binomial_info')
+                    ])
+                ], style={'flex': 2, 'vertical-align': 'middle'})
+            ], style={'flex': 5, 'vertical-align': 'middle' ,'display': 'flex'}),
 
             # right div
             html.Div([
@@ -93,7 +95,7 @@ app.layout = html.Div(children=[
                     ]),
                     html.Div(id='tabs-content')
                 ])
-            ], style={'flex': 5, 'vertical-align': 'middle'})
+            ], style={'flex': 8, 'vertical-align': 'middle'})
     ], style={'display': 'flex', 'flex-wrap': 'wrap', 'justify-content': 'center', 'margin': 'auto'})
 ])
 
