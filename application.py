@@ -10,12 +10,18 @@ import pandas as pd
 from formula import Black_Scholes_model, Binomial_model, Monte_Carlo_simulation
 
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
-app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
+app = dash.Dash(__name__, external_stylesheets=external_stylesheets,
+                meta_tags=[
+                    {'name': "viewport",
+                    'content': "width=device-width",
+                    'initial-scale': 1.0}
+                ])
+app.title = 'Option pricing'
 application = app.server
 
 app.layout = html.Div(children=[
     # title
-    html.H3('Option pricing - Black Scholes Model, Binomial Model, and Monte Carlo Simulation', style={'textAlign': 'center', 'color': '#adb7c9', 'font-size': '2.8vw'}),
+    html.H3('Option pricing - Black Scholes Model, Binomial Model, and Monte Carlo Simulation', style={'textAlign': 'center', 'color': '#adb7c9'}),
     html.Div([
             # left div
             html.Div([
