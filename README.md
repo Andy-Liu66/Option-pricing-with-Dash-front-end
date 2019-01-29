@@ -57,6 +57,7 @@ If deployment is successfully done, you can access your app from url which could
 ![result_chrome](https://i.imgur.com/6Rkn0zK.png)
 
 Web page is also responsive according to screen size:
+
 ![result_mobile](https://i.imgur.com/9Kywkmt.jpg)
 
 ## Reference
