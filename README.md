@@ -53,6 +53,13 @@ If deployment is successfully done, you can access your app from url which could
 
 (At first, I thought that I need to push my code to github then Elastic Beanstalk will read my code from the repository. After figuring out how it works, I realize that the usage of git in the process is for version controlling, not like pushing stuff to online repositry.)
 
+## Result
+![result_chrome](https://i.imgur.com/6Rkn0zK.png)
+
+Web page is also responsive according to screen size:
+
+![result_mobile](https://i.imgur.com/u5fKGnT.jpg)
+
 ## Reference
 * **Option pricing**
   * Binomial
@@ -78,3 +85,4 @@ If deployment is successfully done, you can access your app from url which could
 * **CSS**
   * [CSS Flexbox](https://www.w3schools.com/css/css3_flexbox.asp)
   * [Flexbox Tutorial (CSS): Real Layout Examples](https://www.youtube.com/watch?v=k32voqQhODc)
+  * [Responsive Web Design - The Viewport](https://www.w3schools.com/css/css_rwd_viewport.asp)
